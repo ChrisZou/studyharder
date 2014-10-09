@@ -77,7 +77,7 @@ public class MonitorService extends Service {
 	private void checkActivity() {
 		ActivityManager am = (ActivityManager) getSystemService(Activity.ACTIVITY_SERVICE);
 		String pckName = am.getRunningTasks(1).get(0).topActivity.getPackageName();
-		L.l("current app: "+pckName);
+        //L.l("current app: "+pckName);
 
 		//If the current app is this app, then skip
 		if(pckName.equals(getPackageName())) {
@@ -124,6 +124,12 @@ public class MonitorService extends Service {
 	private void startMonitoring() {
 		mHandler.sendEmptyMessageDelayed(MSG_CHECK_ACTIVITY, 1000);
 	}
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        startService(new Intent(this, MonitorService.class));
+    }
 
 	/* (non-Javadoc)
 	 * @see android.app.Service#onBind(android.content.Intent)
