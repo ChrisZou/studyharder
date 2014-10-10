@@ -5,9 +5,6 @@
  */
 package com.chriszou.studyharder;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.Service;
@@ -17,13 +14,16 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
 
-import com.chriszou.androidlibs.L;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author zouyong
  * 
  */
-public class MonitorService extends Service {
+public class MonitorService extends Service implements MonitoringApp.OnAppsChangedListener{
 	private static final int MSG_CHECK_ACTIVITY = 0;
 
 	/**
@@ -33,7 +33,7 @@ public class MonitorService extends Service {
 	private static final String TARGET_ACTIVITY = TARGET_PACKAGE+".QuickReviewActivity_";
 
 	private boolean mInited = false;
-	private Map<String, String> mTargetApps;
+//	private Map<String, String> mTargetApps;
 
 	/**
 	 * We have to prevent the case that the same app showing all the time, and we check it continuously.
@@ -92,7 +92,7 @@ public class MonitorService extends Service {
 		mPrevousApp = mCurrerntApp;
 		mCurrerntApp = pckName;
 
-		if(mTargetApps.containsKey(mCurrerntApp)) {
+		if(mMonitoredApps.contains(mCurrerntApp)) {
 			onHit(mCurrerntApp);
 		}
 	}
@@ -109,16 +109,16 @@ public class MonitorService extends Service {
 	}
 
 	private void init() {
-		initMonitoringApps();
+        loadMonitoredApps();
+        MonitoringApp.registerOnAppsChangedListener(this);
 	}
 
-	private void initMonitoringApps() {
-		mTargetApps = new HashMap<String,String>();
-		mTargetApps.put("com.tencent.mm", "Wechat");
-		mTargetApps.put("com.tencent.mobileqq", "QQ");
-		mTargetApps.put("com.wumii.android.mimi", "Mimi");
-		mTargetApps.put("com.douban.group", "Douban Group");
-		mTargetApps.put("com.douban.frodo", "Douban");
+	private void loadMonitoredApps() {
+        mMonitoredApps.clear();
+        List<MonitoringApp> apps = MonitoringApp.all();
+        for(MonitoringApp app : apps) {
+            mMonitoredApps.add(app.pkgName);
+        }
 	}
 
 	private void startMonitoring() {
@@ -127,8 +127,9 @@ public class MonitorService extends Service {
 
     @Override
     public void onDestroy() {
-        super.onDestroy();
+        MonitoringApp.unregisterOnAppsChangedListener(this);
         startService(new Intent(this, MonitorService.class));
+        super.onDestroy();
     }
 
 	/* (non-Javadoc)
@@ -136,8 +137,12 @@ public class MonitorService extends Service {
 	 */
 	@Override
 	public IBinder onBind(Intent intent) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
+    List<String> mMonitoredApps = new ArrayList<String>();
+    @Override
+    public void onAppsChanged() {
+        loadMonitoredApps();
+    }
 }
