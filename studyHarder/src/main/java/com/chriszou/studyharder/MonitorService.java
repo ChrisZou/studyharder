@@ -128,8 +128,8 @@ public class MonitorService extends Service implements MonitoringApp.OnAppsChang
     @Override
     public void onDestroy() {
         MonitoringApp.unregisterOnAppsChangedListener(this);
-        startService(new Intent(this, MonitorService.class));
         super.onDestroy();
+        startService(new Intent(this, MonitorService.class));
     }
 
 	/* (non-Javadoc)

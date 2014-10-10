@@ -75,7 +75,6 @@ public class AppManager{
      */
     public String getAppNameFromPkg(String pkgName){
         try {
-            L.l("pkg: "+pkgName);
             ApplicationInfo appInfo = mManager.getApplicationInfo(pkgName, 0);
             return appInfo.loadLabel(mManager).toString();
         } catch (NameNotFoundException e) {
