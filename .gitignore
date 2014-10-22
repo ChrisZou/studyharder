@@ -28,3 +28,5 @@ proguard/
 **/.idea/workspace.xml
 **/.idea/tasks.xml
 .idea/workspace.xml
+
+*.iml
