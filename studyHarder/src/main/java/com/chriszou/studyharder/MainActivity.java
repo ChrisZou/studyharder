@@ -76,12 +76,15 @@ public class MainActivity extends Activity implements MonitoringApp.OnAppsChange
     }
 
     void startMonitoringService() {
+        AppMonitor.setShouldMonitor(true);
 		Intent intent = new Intent(this, MonitorService.class);
 		startService(intent);
 	}
 
     @Click(R.id.main_stopService)
     void stopMonitoringService() {
+        AppMonitor.setShouldMonitor(false);
+        AppMonitor.getInstance(this).stopMonitoring();
         Intent intent = new Intent(this, MonitorService.class);
         stopService(intent);
     }

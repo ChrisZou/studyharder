@@ -24,6 +24,12 @@
         </activity>
         <activity android:name=".AppSelectorActivity_"/>
         <service android:name="com.chriszou.studyharder.MonitorService"/>
+        <receiver android:name=".ServiceDestroyReceiver" >
+            <intent-filter>
+                <action android:name="@string/keep_service" >
+                </action>
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

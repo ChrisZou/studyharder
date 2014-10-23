@@ -4,5 +4,6 @@
     <string name="app_name">StudyHarder</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
-
+    <string name="keep_service">KEEP_SERVICE</string>
 </resources>
+
