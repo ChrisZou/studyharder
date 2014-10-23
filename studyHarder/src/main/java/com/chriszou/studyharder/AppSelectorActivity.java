@@ -37,7 +37,7 @@ public class AppSelectorActivity extends Activity {
      */
     @AfterViews
     void loadApps() {
-        List<AppInfo> apps = new AppManager(this).getAllApps(this);
+        List<AppInfo> apps = AppManager.getInstance(this).getAllApps(this);
         List<MonitoringApp> monitoringApps = MonitoringApp.all();
         for(MonitoringApp app:monitoringApps) {
             if(apps.contains(app)) {

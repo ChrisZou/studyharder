@@ -1,6 +1,6 @@
 /**
  * AppsAdapter.java
- * 
+ *
  * Created by zouyong on 7:19:01 AM, 2014
  */
 package com.chriszou.studyharder;
@@ -19,7 +19,7 @@ import com.chriszou.androidlibs.BaseListAdapter;
 
 /**
  * @author zouyong
- * 
+ *
  */
 public class AppsAdapter extends BaseListAdapter<AppInfo> {
 
@@ -30,12 +30,12 @@ public class AppsAdapter extends BaseListAdapter<AppInfo> {
 	 */
 	public AppsAdapter(Context context, List<AppInfo> data) {
 		super(context, data);
-        mAppManager = new AppManager(context);
+        mAppManager = AppManager.getInstance(context);
 	}
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see android.widget.Adapter#getView(int, android.view.View, android.view.ViewGroup)
 	 */
 	@Override
@@ -58,7 +58,7 @@ public class AppsAdapter extends BaseListAdapter<AppInfo> {
         holder.iconView.setImageDrawable(info.icon);
 		return convertView;
 	}
-    
+
 	public static class ViewHolder {
 		public ImageView iconView;
         public TextView nameView;
