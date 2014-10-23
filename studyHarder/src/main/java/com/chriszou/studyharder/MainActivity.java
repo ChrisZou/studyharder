@@ -45,7 +45,6 @@ public class MainActivity extends Activity implements MonitoringApp.OnAppsChange
     protected void onDestroy() {
         MonitoringApp.unregisterOnAppsChangedListener(this);
         super.onDestroy();
-
     }
 
     @OptionsItem(R.id.action_add)

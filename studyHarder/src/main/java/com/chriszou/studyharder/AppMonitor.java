@@ -54,6 +54,7 @@ public class AppMonitor implements MonitoringApp.OnAppsChangedListener {
     private Context mContext;
     private AppMonitor(Context context) {
         mContext = context;
+        init();
     }
 
     private static AppMonitor sAppMonitor;
